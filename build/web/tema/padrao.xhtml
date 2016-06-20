@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Meu Sistema</title>
+        <style type="text/css">
+            body {background-color: #000000; font-size: 12px}
+        </style> 
+    </h:head>
+    <h:body>
+        <div align="center">
+            <p:layout style="min-width:1020px;max-width:1020px;min-height:800px">  
+                <p:layoutUnit position="north">  
+                    <h:graphicImage id="imagem" url="/imagens/banner.jpg" width="990"/>
+                    <p:resizable for="imagem" aspectRatio="true"/>
+                </p:layoutUnit>  
+                <p:layoutUnit position="west" size="190">                       
+                    <ui:insert name="menu">
+                        <h:form>
+                            <p:menu style="width: 170px">
+                                <p:submenu label="Menu">
+                                    <p:menuitem action="#{clienteMB.listar}" value="Clientes"/>  
+                                    <p:menuitem action="#{agendamentoMB.listar()}" value="Agendamento"/>
+                                </p:submenu>
+                            </p:menu>
+                        </h:form>
+                    </ui:insert>
+                </p:layoutUnit>
+                <p:layoutUnit position="center">                      
+                    <ui:insert name="centro">
+                        O que estiver aqui será substituido!
+                    </ui:insert>
+                </p:layoutUnit> 
+            </p:layout>  
+        </div>
+    </h:body>
+</html>

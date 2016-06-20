@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+    <style type="text/css">
+        .emp1 .fc-content{
+            background: #006600;
+        }
+        .emp2 .fc-content{
+            background: #003399;
+        }
+    </style>
+    <ui:composition template="/tema/padrao.xhtml">
+        <ui:define name="centro"> 
+            <p:panel id="basic" style="margin-bottom:20px" >     
+
+                <h:body>
+                    <h:form>
+                        <p:growl id="msgGrowl" showDetail="true"/>
+                        <p:schedule id="schEvento" widgetVar="meuCalendario" value="#{agendamentoMB.agendamentoModel}" timeZone="America/Sao_Paulo" locale="tr">
+
+                            <p:ajax event="eventSelect" listener="#{agendamentoMB.quandoSelecionado}" update="agendamentoDetalhe" oncomplete="PF('caixaDialog').show();"/>
+                            <p:ajax event="dateSelect" listener="#{agendamentoMB.quandoNovo}" update="agendamentoDetalhe" oncomplete="PF('caixaDialog').show();"/>
+                            <p:ajax event="eventMove" listener="#{agendamentoMB.quandoMovido}" update="schEvento"/>
+                            <p:ajax event="eventResize" listener="#{agendamentoMB.quandoRedimencionar}" update="schEvento"/>
+
+                        </p:schedule>
+                        <p:dialog widgetVar="caixaDialog" header="Agendamento" resizable="false" modal="false" showEffect="clip">
+                            <p:outputPanel id="agendamentoDetalhe">
+                                <h:panelGrid columns="2">
+                                    
+
+                                    <p:outputLabel value="Titulo"/>
+                                    <p:inputText value="#{agendamentoMB.agendamento.titulo}"/>
+
+                                    <p:outputLabel value="Inicio"/>
+                                    <p:calendar value="#{agendamentoMB.agendamento.dataInicio}" pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Sao_Paulo"/>
+
+                                    <p:outputLabel value="Fim"/>
+                                    <p:calendar value="#{agendamentoMB.agendamento.dataFim}" pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Sao_Paulo"/>
+
+                                    <p:outputLabel value="Status"/>
+                                    <p:selectBooleanCheckbox value="#{agendamentoMB.agendamento.status}" />    
+
+                                    <p:outputLabel value="Descrição:"/>
+                                    <p:inputTextarea value="#{agendamentoMB.agendamento.descricao}" autoResize="true"/>
+                                </h:panelGrid>
+                                <p:separator/>
+                                <p:commandButton value="Salvar" action="#{agendamentoMB.salvar}" update="msgGrowl, schEvento" oncomplete="PF('caixaDialog').hide();"/>                        
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+                    <script type="text/javascript">
+                        PrimeFaces.locales['tr'] = {
+                            closeText: 'Fechar',
+                            prevText: 'Anterior',
+                            nextText: 'Próximo',
+                            currentText: 'Começo',
+                            monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                            monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                            dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                            dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                            dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+                            weekHeader: 'Semana',
+                            firstDay: 1,
+                            isRTL: false,
+                            showMonthAfterYear: false,
+                            yearSuffix: '',
+                            timeOnlyTitle: 'Só Horas',
+                            timeText: 'Tempo',
+                            hourText: 'Hora',
+                            minuteText: 'Minuto',
+                            secondText: 'Segundo',
+                            currentText: 'Data Atual',
+                                    ampm: false,
+                            month: 'Mês',
+                            week: 'Semana',
+                            day: 'Dia',
+                            allDayText: 'Todo Dia'
+                        };
+                    </script>
+                    <style type="text/css">
+                        .value {
+                            width: 1000px;
+                        }
+                    </style>
+                </h:body>
+            </p:panel>
+        </ui:define> 
+    </ui:composition>
+</html>
