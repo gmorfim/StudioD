@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+    <ui:composition template="/tema/padrao.xhtml">
+        <ui:define name="centro"> 
+            <h:form>
+                <p:panel style="width:700px;">
+                    <p:dataTable value="#{clienteMB.lista}" var="umCliente" style="width:650px;"
+                                 emptyMessage="Sem informações para exibir." >
+
+                        <p:column headerText="Ações" width="40">
+                            <h:commandLink id="botaoEditar" action="#{clienteMB.editar}" styleClass="ui-icon ui-icon-pencil">
+                                <f:setPropertyActionListener value="#{umCliente}" target="#{clienteMB.cliente}" />
+                            </h:commandLink>                       
+                            <p:tooltip for="botaoEditar" value="Editar este cliente" />
+                            <h:commandLink id="botaoExcluir" action="#{clienteMB.excluir}" styleClass="ui-icon ui-icon-trash">
+                                <f:setPropertyActionListener value="#{umCliente}" target="#{clienteMB.cliente}" />
+                            </h:commandLink>
+                            <p:tooltip for="botaoExcluir" value="Excluir este cliente"/>
+                        </p:column> 
+                        <p:column headerText="Nome" >
+                            <p:outputLabel value="#{umCliente.nome}" />
+                        </p:column>
+                    </p:dataTable>                
+                    <br />
+                    <p:commandButton id="botaoNovoCliente" action="#{clienteMB.novoCliente}" value="Adicionar"/> 
+                    <p:tooltip for="botaoNovoCliente" value="Adicionar um novo cliente"/>
+                </p:panel>
+            </h:form>
+        </ui:define> 
+    </ui:composition>
+</html>
