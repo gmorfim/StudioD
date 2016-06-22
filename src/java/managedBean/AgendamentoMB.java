@@ -48,7 +48,7 @@ public class AgendamentoMB implements Serializable {
             evt.setDescription(ag.getDescricao());
             evt.setAllDay(false);
             evt.setEditable(true);
-
+            
             if (ag.isStatus() == true) {
                 evt.setStyleClass("emp1");
             } else if (ag.isStatus() == false) {

@@ -5,20 +5,19 @@
       xmlns:ui="http://java.sun.com/jsf/facelets" 
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"> 
-    <style type="text/css">
-        .emp1 .fc-content{
-            background: #006600;
-        }
-        .emp2 .fc-content{
-            background: #003399;
-        }
-    </style>
     <ui:composition template="/tema/padrao.xhtml">
         <ui:define name="centro"> 
-            <p:panel id="basic" style="margin-bottom:20px" >     
-
+            <p:panel id="basic" style="margin-bottom:20px" >    
                 <h:body>
                     <h:form>
+                        <style type="text/css">
+                            .emp1 .fc-content{
+                                background: #006600 !important;
+                            }
+                            .emp2 .fc-content{
+                                background: #003399 !important;
+                            }
+                        </style>
                         <p:growl id="msgGrowl" showDetail="true"/>
                         <p:schedule id="schEvento" widgetVar="meuCalendario" value="#{agendamentoMB.agendamentoModel}" timeZone="America/Sao_Paulo" locale="tr">
 
@@ -31,7 +30,15 @@
                         <p:dialog widgetVar="caixaDialog" header="Agendamento" resizable="false" modal="false" showEffect="clip">
                             <p:outputPanel id="agendamentoDetalhe">
                                 <h:panelGrid columns="2">
-                                    
+                                    <p:outputLabel value="Cliente" />
+                                    <p:selectOneMenu id="cliente" value="#{agendamentoMB.agendamento.cliente}" >
+                                        <f:selectItem itemLabel=""
+                                                      itemValue=""
+                                                      noSelectionOption="true" /> 
+                                        <f:selectItems value="#{clienteMB.lista}"
+                                                       var="cli" itemValue="#{cli}"
+                                                       itemLabel="#{cli.nome}"/>
+                                    </p:selectOneMenu>
 
                                     <p:outputLabel value="Titulo"/>
                                     <p:inputText value="#{agendamentoMB.agendamento.titulo}"/>
@@ -43,7 +50,7 @@
                                     <p:calendar value="#{agendamentoMB.agendamento.dataFim}" pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Sao_Paulo"/>
 
                                     <p:outputLabel value="Status"/>
-                                    <p:selectBooleanCheckbox value="#{agendamentoMB.agendamento.status}" />    
+                                    <p:selectBooleanCheckbox value="#{agendamentoMB.agendamento.status}"/>    
 
                                     <p:outputLabel value="Descrição:"/>
                                     <p:inputTextarea value="#{agendamentoMB.agendamento.descricao}" autoResize="true"/>

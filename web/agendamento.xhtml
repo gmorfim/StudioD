@@ -12,10 +12,10 @@
                     <h:form>
                         <style type="text/css">
                             .emp1 .fc-content{
-                                background: #006600;
+                                background: #006600 !important;
                             }
                             .emp2 .fc-content{
-                                background: #003399;
+                                background: #003399 !important;
                             }
                         </style>
                         <p:growl id="msgGrowl" showDetail="true"/>
@@ -50,7 +50,7 @@
                                     <p:calendar value="#{agendamentoMB.agendamento.dataFim}" pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Sao_Paulo"/>
 
                                     <p:outputLabel value="Status"/>
-                                    <p:selectBooleanCheckbox value="#{agendamentoMB.agendamento.status}" />    
+                                    <p:selectBooleanCheckbox value="#{agendamentoMB.agendamento.status}"/>    
 
                                     <p:outputLabel value="Descrição:"/>
                                     <p:inputTextarea value="#{agendamentoMB.agendamento.descricao}" autoResize="true"/>
