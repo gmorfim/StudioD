@@ -52,25 +52,8 @@
 
                                     <p:outputLabel value="Status"/>
                                     <p:selectBooleanCheckbox value="#{agendamentoMB.agendamento.status}"/>  
-
-                                    <p:fieldset id="servicos" legend="Serviços" toggleable="true" toggleSpeed="30">
-                                        <!-- <p:panel style="height: 40">
-                                             <p:dataList id="listaServicos" value="#{avaliacaoSaepMB.listaCompetenciaToView}"
-                                                         emptyMessage="Nenhuma competência adicionada"
-                                                         var="umaDescricaoCompetencia" type="unordered">
-                                                 <div align="left">
-                                        #{umaDescricaoCompetencia}
-                                    </div>
-                                        
-                                        </p:dataList>                       
-                                        </p:panel>
-                                        <p:commandButton value="Editar competências" type="button" onclick="PF('dlg').show();" />
-                                        <p:commandButton value="Update" type="button" update="listaCompetencias" process="@Form" immediate="true"/>
-                                        <!--hide()
-                                    </p:fieldset>        
---                               -->
-                                        <p:outputLabel value="Descrição:"/>
-                                        <p:inputTextarea value="#{agendamentoMB.agendamento.descricao}" autoResize="true"/>
+                                    <p:outputLabel value="Descrição:"/>
+                                    <p:inputTextarea value="#{agendamentoMB.agendamento.descricao}" autoResize="true"/>
                                 </h:panelGrid>
                                 <p:separator/>
                                 <p:commandButton value="Salvar" action="#{agendamentoMB.salvar}" update="msgGrowl, schEvento" oncomplete="PF('caixaDialog').hide();"/>                        
