@@ -7,81 +7,74 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"> 
     <ui:composition template="/tema/padrao.xhtml">
         <ui:define name="centro"> 
-            <p:panel id="basic" style="margin-bottom:20px" >
+            <p:panel id="basic" style="margin-bottom:20px" >                
                 <h:form>
-                    <p:outputLabel value="Nome " />
-                    <p:inputText value="#{clienteMB.cliente.nome}" size="35" maxlength="35" />
+                    <p:panel header="CADASTRO DE CLIENTE">
+                        <h:panelGrid columns="2" >
+                            <p:outputLabel value="Nome " />
+                            <p:inputText value="#{clienteMB.cliente.nome}" size="35" maxlength="35" />
+                            <p:outputLabel value="Email "/>
+                            <p:inputText value="#{clienteMB.cliente.email}" size="35" maxlength="35"  />
+                            <p:outputLabel value="Telefone " />
+                            <p:inputMask id="telefone" value="#{clienteMB.cliente.telefone}" mask="(99) 9999-9999" size="12" />
+                            <p:outputLabel value="  Celular " />
+                            <p:inputMask id="celular" value="#{clienteMB.cliente.celular}" mask="(99) 9999-9999" size="12"/>
+                            <p:outputLabel value="Endereço " />
+                            <p:inputText value="#{clienteMB.cliente.endereco}" size="35" maxlength="50"/>
+                            <p:outputLabel value=" Número " />
+                            <p:inputText value="#{clienteMB.cliente.numero}" size="6" maxlength="6"/>
+                            <p:outputLabel value="Bairro " />
+                            <p:inputText value="#{clienteMB.cliente.bairro}" size="20" maxlength="20"/>
+                        </h:panelGrid>
+                    </p:panel>
                     <br />
-                    <p:outputLabel value="Email "/>
-                    <p:inputText value="#{clienteMB.cliente.email}" size="35" maxlength="35"  />
-                    <br />
-                    <p:outputLabel value="Telefone " />
-                    <p:inputMask id="telefone" value="#{clienteMB.cliente.telefone}" mask="(99) 9999-9999" size="10" />
-                    <p:outputLabel value="  Celular " />
-                    <p:inputMask id="celular" value="#{clienteMB.cliente.celular}" mask="(99) 9999-9999" size="10"/>
-                    <br />
-                    <p:outputLabel value="Endereço " />
-                    <p:inputText value="#{clienteMB.cliente.endereco}" size="35" maxlength="50"/>
-                    <br />
-                    <p:outputLabel value="Bairro " />
-                    <p:inputText value="#{clienteMB.cliente.bairro}" size="20" maxlength="20"/>
-                    <p:outputLabel value=" Número " />
-                    <p:inputText value="#{clienteMB.cliente.numero}" size="5" maxlength="6"/>
-                    <br />
-                    <br />
-                    <p:outputLabel value="FICHA TÉCNICA"/>
-                    <br />
-                    <br />
-                    <p:outputLabel value="% Branco "/>
-                    <p:selectOneMenu id="branco" value="#{clienteMB.cliente.branco}" >
-                        <f:selectItem itemLabel="Selecione..."
-                                      itemValue=""
-                                      noSelectionOption="true" /> 
-                        <f:selectItems value="#{clienteMB.listaBranco}"
-                                       var="bran" 
-                                       itemValue="#{bran}"
-                                       itemLabel="#{bran} %"/>
-                    </p:selectOneMenu>
-                    <br /> 
-                    <p:outputLabel value="Tipo de Cabelo "/>
-                    <p:selectOneMenu id="tipoCabelo" value="#{clienteMB.cliente.tipoCabelo}" >
-                        <f:selectItem itemLabel="Selecione..."
-                                      itemValue=""
-                                      noSelectionOption="true" /> 
-                        <f:selectItems value="#{clienteMB.listaTipoCabelo}"
-                                       var="tcabelo" 
-                                       itemValue="#{tcabelo}"
-                                       itemLabel="#{tcabelo}"/>                            
-                    </p:selectOneMenu>
-                    <br />
-                    <p:outputLabel value="Alisamento  "/>
-                    <p:selectOneMenu id="alisamento" value="#{clienteMB.cliente.alisamento}" >
-                        <f:selectItem itemLabel="Selecione..."
-                                      itemValue=""
-                                      noSelectionOption="true" /> 
-                        <f:selectItems value="#{clienteMB.listaAlisamento}"
-                                       var="alis" 
-                                       itemValue="#{alis}"
-                                       itemLabel="#{alis}"/>                             
-                    </p:selectOneMenu>
-                    <br />
-                    <h:panelGrid columns="2" cellpadding="0,5">
-                        <p:outputLabel value="Alergia "/>
-                        <p:selectOneRadio value="#{clienteMB.cliente.alergia}">
-                            <f:selectItem itemLabel="Sim" itemValue="true" />
-                            <f:selectItem itemLabel="Não" itemValue="false" />                            
-                        </p:selectOneRadio>
-                    </h:panelGrid>                                
-                    <h:panelGrid columns="2" cellpadding="0,5">
-                        <p:outputLabel value="Cabelo" />
-                        <p:selectOneRadio value="#{clienteMB.cliente.cabelo}">
-                            <f:selectItem itemLabel="Natural" itemValue="true" />
-                            <f:selectItem itemLabel="Cosmético" itemValue="false" />                            
-                        </p:selectOneRadio>
-                    </h:panelGrid>
-                    <br />          
-                    <p:commandButton action="#{clienteMB.salvar}" value="Salvar" />   
-                    <p:commandButton action="#{clienteMB.cancelarEdicao}" value="Cancelar" />
+                    <p:panel header="FICHA TÉCNICA"> 
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="% Branco "/>
+                            <p:selectOneMenu id="branco" value="#{clienteMB.cliente.branco}" >
+                                <f:selectItem itemLabel="Selecione..."
+                                              itemValue=""
+                                              noSelectionOption="true" /> 
+                                <f:selectItems value="#{clienteMB.listaBranco}"
+                                               var="bran" 
+                                               itemValue="#{bran}"
+                                               itemLabel="#{bran} %"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Tipo de Cabelo "/>
+                            <p:selectOneMenu id="tipoCabelo" value="#{clienteMB.cliente.tipoCabelo}" >
+                                <f:selectItem itemLabel="Selecione..."
+                                              itemValue=""
+                                              noSelectionOption="true" /> 
+                                <f:selectItems value="#{clienteMB.listaTipoCabelo}"
+                                               var="tcabelo" 
+                                               itemValue="#{tcabelo}"
+                                               itemLabel="#{tcabelo}"/>                            
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Alisamento  "/>
+                            <p:selectOneMenu id="alisamento" value="#{clienteMB.cliente.alisamento}" >
+                                <f:selectItem itemLabel="Selecione..."
+                                              itemValue=""
+                                              noSelectionOption="true" /> 
+                                <f:selectItems value="#{clienteMB.listaAlisamento}"
+                                               var="alis" 
+                                               itemValue="#{alis}"
+                                               itemLabel="#{alis}"/>                             
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Alergia "/>
+                            <p:selectOneRadio value="#{clienteMB.cliente.alergia}">
+                                <f:selectItem itemLabel="Sim" itemValue="true" />
+                                <f:selectItem itemLabel="Não" itemValue="false" />                            
+                            </p:selectOneRadio>
+                            <p:outputLabel value="Cabelo" />
+                            <p:selectOneRadio value="#{clienteMB.cliente.cabelo}">
+                                <f:selectItem itemLabel="Natural" itemValue="true" />
+                                <f:selectItem itemLabel="Cosmético" itemValue="false" />                            
+                            </p:selectOneRadio>
+                        </h:panelGrid>
+                        <br />          
+                        <p:commandButton action="#{clienteMB.salvar}" value="Salvar" />   
+                        <p:commandButton action="#{clienteMB.cancelarEdicao}" value="Cancelar" />
+                    </p:panel>
                 </h:form>
             </p:panel>
         </ui:define> 

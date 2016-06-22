@@ -6,7 +6,7 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Meu Sistema</title>
+        <title>StudioD</title>
         <style type="text/css">
             body {background-color: #000000; font-size: 12px}
         </style> 
@@ -14,7 +14,7 @@
     <h:body>
         <div align="center">
             <p:layout style="min-width:1020px;max-width:1020px;min-height:800px">  
-                <p:layoutUnit position="north">  
+                <p:layoutUnit position="north" >  
                     <h:graphicImage id="imagem" url="/imagens/banner.jpg" width="990"/>
                     <p:resizable for="imagem" aspectRatio="true"/>
                 </p:layoutUnit>  
@@ -23,7 +23,8 @@
                         <h:form>
                             <p:menu style="width: 170px">
                                 <p:submenu label="Menu">
-                                    <p:menuitem action="#{clienteMB.listar}" value="Clientes"/>  
+                                    <p:menuitem action="index.xhtml" value="Pagina Inicial"/>
+                                    <p:menuitem action="#{clienteMB.listar}" value="Cliente"/>  
                                     <p:menuitem action="#{agendamentoMB.listar()}" value="Agendamento"/>
                                 </p:submenu>
                             </p:menu>
