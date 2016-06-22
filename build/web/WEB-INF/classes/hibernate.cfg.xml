@@ -9,5 +9,6 @@
     <property name="hibernate.hbm2ddl.auto">update</property>
     <mapping class="entity.Cliente" />
     <mapping class="entity.Agendamento" />
+    <mapping class="entity.Servico"/>
   </session-factory>
 </hibernate-configuration>

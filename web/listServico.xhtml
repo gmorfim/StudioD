@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+    <ui:composition template="/tema/padrao.xhtml">
+        <ui:define name="centro"> 
+            <h:form>
+                <p:panel style="width:700px;">
+                    <p:dataTable value="#{servicoMB.lista}" var="umServico" style="width:650px;"
+                                 emptyMessage="Sem informações para exibir." >
+
+                        <p:column headerText="Ações" width="40">
+                            <h:commandLink id="botaoEditar" action="#{servicoMB.editar}" styleClass="ui-icon ui-icon-pencil">
+                                <f:setPropertyActionListener value="#{umServico}" target="#{servicoMB.servico}" />
+                            </h:commandLink>                       
+                            <p:tooltip for="botaoEditar" value="Editar este servico" />
+                            <h:commandLink id="botaoExcluir" action="#{servicoMB.excluir}" styleClass="ui-icon ui-icon-trash">
+                                <f:setPropertyActionListener value="#{umServico}" target="#{servicoMB.servico}" />
+                            </h:commandLink>
+                            <p:tooltip for="botaoExcluir" value="Excluir este servico"/>
+                        </p:column> 
+                        <p:column headerText="Nome" >
+                            <p:outputLabel value="#{umServico.nome}" />
+                        </p:column>
+                        <p:column headerText="Valor" width="60">
+                            <p:outputLabel value="R$: #{umServico.valor}" />
+                        </p:column>
+                    </p:dataTable>                
+                    <br />
+                    <p:commandButton id="botaoNovoServico" action="#{servicoMB.novoServico}" value="Adicionar"/> 
+                    <p:tooltip for="botaoNovoServico" value="Adicionar um novo servico"/>
+                </p:panel>
+            </h:form>
+        </ui:define> 
+    </ui:composition>
+</html>

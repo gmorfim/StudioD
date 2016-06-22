@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+    <ui:composition template="/tema/padrao.xhtml">
+        <ui:define name="centro"> 
+            <script>
+            function mascara(o, f) {
+              v_obj = o;
+              v_fun = f;
+              setTimeout("execmascara()", 1);
+            }
+            function execmascara() {
+              v_obj.value = v_fun(v_obj.value);
+            }
+         function valor(v) {
+        v = v.replace(/\D/g, "");
+        v = v.replace(/[0-9]{15}/, "invalido");
+        v = v.replace(/(\d{1})(\d{11})$/, "$1.$2"); // coloca ponto antes dos
+        // ultimos 11 digitos
+        v = v.replace(/(\d{1})(\d{8})$/, "$1.$2"); // coloca ponto antes dos
+        // ultimos 8 digitos
+        v = v.replace(/(\d{1})(\d{5})$/, "$1.$2"); // coloca ponto antes dos
+        // ultimos 5 digitos
+        v = v.replace(/(\d{1})(\d{1,2})$/, "$1,$2"); // coloca virgula antes dos
+        // ultimos 2 digitos
+        return v;
+}
+                    </script>
+            <p:panel id="basic" style="margin-bottom:20px" >                
+                <h:form>
+                    <p:panel header="CADASTRO DE SERVIÇO">
+                        <h:panelGrid columns="2" >
+                            <p:outputLabel value="Nome " />
+                            <p:inputText value="#{servicoMB.servico.nome}" required="true" size="35" maxlength="35" />
+                            <p:outputLabel value="Valor "/>
+                            <p:inputText id="valor" value="#{servicoMB.servico.valor}" 
+                                         maxlength="11" size="20" required="true" requiredMessage="Informe o Preço do serviço" 
+                                         onkeypress="mascara(this, valor);" />                       
+                                                                                 
+                        </h:panelGrid>
+                        <br />          
+                        <p:commandButton action="#{servicoMB.salvar}" value="Salvar" />   
+                        <p:commandButton action="#{servicoMB.cancelarEdicao}" value="Cancelar" />
+                    </p:panel>
+                </h:form>
+            </p:panel>
+        </ui:define> 
+    </ui:composition>
+</html>

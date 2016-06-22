@@ -2,6 +2,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +30,8 @@ public class Agendamento implements Serializable {
     // vai ter hora inicio
     // vai ter hora fim
     private String descricao; // sera substituido por serviço
-//    private Servico servico;
+//    @ManyToMany
+//    private List<Servico> servico;
      @Type(type="true_false")
     private boolean status;
 
@@ -94,6 +96,16 @@ public class Agendamento implements Serializable {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+//    public List<Servico> getServico() {
+//        return servico;
+//    }
+//
+//    public void setServico(List<Servico> servico) {
+//        this.servico = servico;
+//    }
+    
+    
  @Override
     public int hashCode() {
         int hash = 3;
