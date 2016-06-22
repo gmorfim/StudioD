@@ -7,19 +7,20 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"> 
     <ui:composition template="/tema/padrao.xhtml">
         <ui:define name="centro"> 
-            <p:panel id="basic" style="margin-bottom:20px" >    
+            <p:panel id="basic" style="margin-bottom:20px" > 
+                <style type="text/css">
+                    .emp1 .fc-event-inner{
+                        background: #006600;
+                    }
+                    .emp2 .fc-event-inner{
+                        background: #003399;
+                    }
+                </style>
                 <h:body>
                     <h:form>
-                        <style type="text/css">
-                            .emp1 .fc-content{
-                                background: #006600 !important;
-                            }
-                            .emp2 .fc-content{
-                                background: #003399 !important;
-                            }
-                        </style>
+
                         <p:growl id="msgGrowl" showDetail="true"/>
-                        <p:schedule id="schEvento" widgetVar="meuCalendario" value="#{agendamentoMB.agendamentoModel}" timeZone="America/Sao_Paulo" locale="tr">
+                        <p:schedule id="schEvento" widgetVar="meuCalendario" value="#{agendamentoMB.agendamentoModel}" timeZone="America/Sao_Paulo" locale="pt">
 
                             <p:ajax event="eventSelect" listener="#{agendamentoMB.quandoSelecionado}" update="agendamentoDetalhe" oncomplete="PF('caixaDialog').show();"/>
                             <p:ajax event="dateSelect" listener="#{agendamentoMB.quandoNovo}" update="agendamentoDetalhe" oncomplete="PF('caixaDialog').show();"/>
@@ -61,7 +62,7 @@
                         </p:dialog>
                     </h:form>
                     <script type="text/javascript">
-                        PrimeFaces.locales['tr'] = {
+                        PrimeFaces.locales['pt'] = {
                             closeText: 'Fechar',
                             prevText: 'Anterior',
                             nextText: 'Próximo',
@@ -81,7 +82,7 @@
                             hourText: 'Hora',
                             minuteText: 'Minuto',
                             secondText: 'Segundo',
-                            currentText: 'Data Atual',
+                            currentText: 'Hoje',
                                     ampm: false,
                             month: 'Mês',
                             week: 'Semana',
