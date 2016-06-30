@@ -17,27 +17,34 @@ import org.hibernate.Session;
 public class ClienteDao {
 
     public void salvar(Cliente cliente) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.getTransaction().begin();
-        session.saveOrUpdate(cliente);
-        session.getTransaction().commit();
+//        Session session = HibernateUtil.getSessionFactory().openSession();
+//        session.getTransaction().begin();
+//        session.saveOrUpdate(cliente);
+//        session.getTransaction().commit();
+        HibernateUtility.beginTransaction();
+        HibernateUtility.getSession().saveOrUpdate(cliente);
+        HibernateUtility.commitTransaction();
     }
 
     public List<Cliente> getAll() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.getTransaction().begin();
+//        Session session = HibernateUtil.getSessionFactory().openSession();
+//        session.getTransaction().begin();
         List<Cliente> lista;
-        Query query = session.createQuery("from entity.Cliente");
+        // Query query = session.createQuery("from entity.Cliente");
+        Query query = HibernateUtility.getSession().createQuery("from entity.Cliente");
         lista = query.list();
-        session.getTransaction().commit();
+
         return lista;
     }
-    
+
     public void excluir(Cliente cliente) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.getTransaction().begin();
-        session.delete(cliente);
-        session.getTransaction().commit();
+//        Session session = HibernateUtil.getSessionFactory().openSession();
+//        session.getTransaction().begin();
+//        session.delete(cliente);
+//        session.getTransaction().commit();
+        HibernateUtility.beginTransaction();
+        HibernateUtility.getSession().delete(cliente);
+        HibernateUtility.commitTransaction();
     }
 
 }

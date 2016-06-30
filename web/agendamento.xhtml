@@ -4,7 +4,9 @@
       xmlns:h="http://java.sun.com/jsf/html" 
       xmlns:ui="http://java.sun.com/jsf/facelets" 
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:o="http://omnifaces.org/ui"> 
+
     <ui:composition template="/tema/padrao.xhtml">
         <ui:define name="centro"> 
             <p:panel id="basic" style="margin-bottom:20px" > 
@@ -52,14 +54,37 @@
 
                                     <p:outputLabel value="Status"/>
                                     <p:selectBooleanCheckbox value="#{agendamentoMB.agendamento.status}"/>  
-                                    <p:outputLabel value="Descrição:"/>
-                                    <p:inputTextarea value="#{agendamentoMB.agendamento.descricao}" autoResize="true"/>
                                 </h:panelGrid>
-                                <p:separator/>
+                                <p:dataList id="listaServicos" value="#{agendamentoMB.listaServicoToView}"
+                                            emptyMessage="Nenhum Serviço adicionado"
+                                            var="umNomeServico" type="unordered">
+                                    <div align="left">
+                                        #{umNomeServico}
+                                    </div>
+                                </p:dataList>  
+                                <br/>
+
+
+
+                                <p:commandButton value="Adicionar Serviços" type="button" onclick="PF('dlg').show();" />
                                 <p:commandButton value="Salvar" action="#{agendamentoMB.salvar}" update="msgGrowl, schEvento" oncomplete="PF('caixaDialog').hide();"/>                        
                             </p:outputPanel>
                         </p:dialog>
+
+                        <p:dialog header="Selecione os Serviços que farão parte deste agendamento." 
+                                  widgetVar="dlg" modal="false">
+                            <p:panel id="panelPicklist">                         
+                                <p:pickList value="#{agendamentoMB.servicoDualList}" 
+                                            var="umServico" itemLabel="#{umServico.nome}"
+                                            converter="servicoConverter"
+                                            itemValue="#{umServico}"> 
+                                    <p:ajax event="transfer" listener="#{agendamentoMB.onTransfer}" update="listaServicos" />
+                                </p:pickList>
+                            </p:panel>
+                            <p:commandButton value="Finalizar" type="button" onclick="PF('dlg').hide();" />
+                        </p:dialog>                        
                     </h:form>
+
                     <script type="text/javascript">
                         PrimeFaces.locales['pt'] = {
                             closeText: 'Fechar',

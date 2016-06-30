@@ -1,10 +1,13 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,9 +32,9 @@ public class Agendamento implements Serializable {
     private Date dataFim;
     // vai ter hora inicio
     // vai ter hora fim
-    private String descricao; // sera substituido por serviço
-//    @ManyToMany
-//    private List<Servico> servico;
+//    private String descricao; // sera substituido por serviço
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Servico> servico = new ArrayList();
      @Type(type="true_false")
     private boolean status;
 
@@ -81,13 +84,13 @@ public class Agendamento implements Serializable {
         this.dataFim = dataFim;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+//    public String getDescricao() {
+//        return descricao;
+//    }
+//
+//    public void setDescricao(String descricao) {
+//        this.descricao = descricao;
+//    }
 
     public Cliente getCliente() {
         return cliente;
@@ -97,20 +100,65 @@ public class Agendamento implements Serializable {
         this.cliente = cliente;
     }
 
-//    public List<Servico> getServico() {
-//        return servico;
-//    }
-//
-//    public void setServico(List<Servico> servico) {
-//        this.servico = servico;
-//    }
-    
-    
- @Override
+    public List<Servico> getServico() {
+        return servico;
+    }
+
+    public void setServico(List<Servico> servico) {
+        this.servico = servico;
+    }
+
+    @Override
     public int hashCode() {
         int hash = 3;
-        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 47 * hash + Objects.hashCode(this.id);
+        hash = 47 * hash + Objects.hashCode(this.titulo);
+        hash = 47 * hash + Objects.hashCode(this.cliente);
+        hash = 47 * hash + Objects.hashCode(this.dataInicio);
+        hash = 47 * hash + Objects.hashCode(this.dataFim);
+        hash = 47 * hash + Objects.hashCode(this.servico);
+        hash = 47 * hash + (this.status ? 1 : 0);
         return hash;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Agendamento other = (Agendamento) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.titulo, other.titulo)) {
+            return false;
+        }
+        if (!Objects.equals(this.cliente, other.cliente)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataInicio, other.dataInicio)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataFim, other.dataFim)) {
+            return false;
+        }
+        if (!Objects.equals(this.servico, other.servico)) {
+            return false;
+        }
+        if (this.status != other.status) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Agendamento{" + "id=" + id + ", titulo=" + titulo + ", cliente=" + cliente + ", dataInicio=" + dataInicio + ", dataFim=" + dataFim + ", servico=" + servico + ", status=" + status + '}';
+    }
+    
+ 
 
 }

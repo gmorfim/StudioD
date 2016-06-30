@@ -6,27 +6,30 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 public class ServicoDao {
-     public void salvar(Servico servico) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.getTransaction().begin();
-        session.saveOrUpdate(servico);
-        session.getTransaction().commit();
+
+    public void salvar(Servico servico) {
+        HibernateUtility.beginTransaction();
+        HibernateUtility.getSession().saveOrUpdate(servico);
+        HibernateUtility.commitTransaction();
     }
 
     public List<Servico> getAll() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.getTransaction().begin();
+        //        Session session = HibernateUtil.getSessionFactory().openSession();
+//        session.getTransaction().begin();
         List<Servico> lista;
-        Query query = session.createQuery("from entity.Servico");
+        // Query query = session.createQuery("from entity.Cliente");
+        Query query = HibernateUtility.getSession().createQuery("from entity.Servico");
         lista = query.list();
-        session.getTransaction().commit();
         return lista;
     }
-    
+
     public void excluir(Servico servico) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.getTransaction().begin();
-        session.delete(servico);
-        session.getTransaction().commit();
+//        Session session = HibernateUtil.getSessionFactory().openSession();
+//        session.getTransaction().begin();
+//        session.delete(servico);
+//        session.getTransaction().commit();
+        HibernateUtility.beginTransaction();
+        HibernateUtility.getSession().delete(servico);
+        HibernateUtility.commitTransaction();
     }
 }

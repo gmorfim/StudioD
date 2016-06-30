@@ -1,10 +1,13 @@
 package managedBean;
 
 import dao.AgendamentoDao;
+import dao.ServicoDao;
 import entity.Agendamento;
+import entity.Servico;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -16,8 +19,10 @@ import javax.faces.context.FacesContext;
 import org.primefaces.component.schedule.Schedule;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
+import org.primefaces.model.DualListModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
@@ -29,26 +34,29 @@ public class AgendamentoMB implements Serializable {
     private ScheduleModel agendamentoModel;
     private List<Agendamento> listaAgendamento;
     private AgendamentoDao agendamentoDao = new AgendamentoDao();
+    private DualListModel<Servico> servicoDualList = new DualListModel();
+    private List<String> listaServicoToView = new ArrayList();
+    private ServicoDao servicoDao;
 
     @PostConstruct
     public void inicializar() {
         agendamentoDao = new AgendamentoDao();
         agendamento = new Agendamento();
         agendamentoModel = new DefaultScheduleModel();
-
+        
         listaAgendamento = agendamentoDao.getAll();
 
         for (Agendamento ag : listaAgendamento) {
             DefaultScheduleEvent evt = new DefaultScheduleEvent();
-            
+
             evt.setEndDate(ag.getDataFim());
             evt.setStartDate(ag.getDataInicio());
             evt.setTitle(ag.getTitulo());
             evt.setData(ag.getId());
-            evt.setDescription(ag.getDescricao());
+//            evt.setDescription(ag.getDescricao());
             evt.setAllDay(false);
             evt.setEditable(true);
-            
+
             if (ag.isStatus() == true) {
                 evt.setStyleClass("emp1");
             } else if (ag.isStatus() == false) {
@@ -84,7 +92,7 @@ public class AgendamentoMB implements Serializable {
 
         agendamento = new Agendamento();
         agendamento.setDataInicio(new Timestamp(event.getStartDate().getTime()));
-        agendamento.setDataFim(new Timestamp(event.getEndDate().getTime()));
+        agendamento.setDataFim(new Timestamp(event.getEndDate().getTime()));        
         System.out.println(new Timestamp(event.getEndDate().getTime()));
         //agendamento.setInicio(new java.sql.Date(event.getStartDate().getTime()));
         //agendamento.setFim(new java.sql.Date(event.getEndDate().getTime()));
@@ -98,6 +106,15 @@ public class AgendamentoMB implements Serializable {
             if (agendamento.getDataInicio().getTime() <= agendamento.getDataFim().getTime()) {
                 agendamentoDao = new AgendamentoDao();
                 try {
+                    
+                    //zera as competencias da questão atual e salva
+                    agendamento.getServico().clear();
+                    agendamentoDao.salvar(agendamento);
+                    //Adiciona as que foram selecionadas pelo usuario
+                    List<Servico> escolhidos = servicoDualList.getTarget();
+                    for (Servico umServicoEscolhido : escolhidos) {
+                        agendamento.getServico().add(umServicoEscolhido);
+                    }
                     agendamentoDao.salvar(agendamento);
                     inicializar();
                 } catch (Exception ex) {
@@ -117,6 +134,51 @@ public class AgendamentoMB implements Serializable {
             }
         }
         return "agendamento.xhtml";
+    }
+
+    public DualListModel<Servico> getServicoDualList() {
+        servicoDao = new ServicoDao();
+        List<Servico> disponivel = new ArrayList();
+        List<Servico> noAgendamento = new ArrayList();
+
+        List<Servico> todosServicos = servicoDao.getAll();
+        List<Servico> servicosDoAgendamento = agendamento.getServico();
+
+        for (Servico s : todosServicos) {
+            if (!servicosDoAgendamento.contains(s)) {
+                disponivel.add(s);
+            } else {
+                noAgendamento.add(s);
+            }
+        servicoDualList.setSource(disponivel);
+        servicoDualList.setTarget(noAgendamento);
+        }
+        return servicoDualList;
+    }
+
+    public void setServicoDualList(DualListModel<Servico> servicoDualList) {
+        this.servicoDualList = servicoDualList;
+    }
+
+    public void onTransfer(TransferEvent event) {
+        if (event.isAdd()) {
+            for (Object item : event.getItems()) {
+                listaServicoToView.add(((Servico) item).getNome());
+            }
+        }
+        if (event.isRemove()) {
+            for (Object item : event.getItems()) {
+                listaServicoToView.remove(((Servico) item).getNome());
+            }
+        }
+    }
+
+    public void primeiraCargaListaServicoToView() {
+        System.out.println("carregou #primeiraCargaListaCompetenciaToView");
+        listaServicoToView.clear();
+        for (Servico umServico : agendamento.getServico()) {
+            listaServicoToView.add(umServico.getNome());
+        }
     }
 
     public void quandoMovido(ScheduleEntryMoveEvent eventoMovido) {
@@ -154,6 +216,14 @@ public class AgendamentoMB implements Serializable {
     }
 
     // GETTER E SETTERS
+    public List<String> getListaServicoToView() {
+        return listaServicoToView;
+    }
+
+    public void setListaServicoToView(List<String> listaServicoToView) {
+        this.listaServicoToView = listaServicoToView;
+    }
+
     public Agendamento getAgendamento() {
         return agendamento;
     }

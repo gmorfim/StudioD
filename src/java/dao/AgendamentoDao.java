@@ -16,28 +16,26 @@ import org.hibernate.Session;
  */
 public class AgendamentoDao {
     
-     public void salvar(Agendamento agendamento) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.getTransaction().begin();
-        session.saveOrUpdate(agendamento);
-        session.getTransaction().commit();
+    public void salvar(Agendamento agendamento) {
+        HibernateUtility.beginTransaction();
+        HibernateUtility.getSession().saveOrUpdate(agendamento);
+        HibernateUtility.commitTransaction();
     }
-
+    
     public List<Agendamento> getAll() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.getTransaction().begin();
+        //        Session session = HibernateUtil.getSessionFactory().openSession();
+//        session.getTransaction().begin();
         List<Agendamento> lista;
-        Query query = session.createQuery("from entity.Agendamento");
+        // Query query = session.createQuery("from entity.Cliente");
+        Query query = HibernateUtility.getSession().createQuery("from entity.Agendamento");
         lista = query.list();
-        session.getTransaction().commit();
         return lista;
     }
     
     public void excluir(Agendamento agendamento) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.getTransaction().begin();
-        session.delete(agendamento);
-        session.getTransaction().commit();
+        HibernateUtility.beginTransaction();
+        HibernateUtility.getSession().delete(agendamento);
+        HibernateUtility.commitTransaction();
     }
     
 }
